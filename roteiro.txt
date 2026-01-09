@@ -1,0 +1,61 @@
+# 🏛️ Projeto SBD2: Auditoria de Cotas Parlamentares
+
+**Disciplina:** Sistemas de Banco de Dados 2 (UnB)  
+**Tema:** Monitoramento e Análise de Gastos Públicos (Cota Parlamentar)  
+**Arquitetura:** Medalhão (Medallion Architecture) com Data Warehouse  
+
+---
+
+## 🎯 1. Objetivo do Projeto
+Desenvolver um pipeline de Engenharia de Dados *End-to-End* (Ponta a Ponta) para processar, limpar e analisar os dados de reembolsos da Câmara dos Deputados. O sistema visa estruturar dados brutos em um Data Warehouse otimizado para Business Intelligence (BI), permitindo a auditoria de verbas públicas.
+
+---
+
+## 🏗️ 2. Arquitetura da Solução
+O projeto segue estritamente a arquitetura solicitada, dividida em camadas lógicas de dados:
+
+```mermaid
+graph LR
+    A[Fonte: Kaggle CSV] -->|Ingestão| B(Bronze Layer - Raw)
+    B -->|ETL: Pandas| C(Silver Layer - Trusted)
+    C -->|Modelagem Dimensional| D(Gold Layer - DW)
+    D -->|Conexão JDBC| E[Power BI - Dashboards]
+
+    📅 4. Roteiro de Desenvolvimento (Roadmap)
+✅ Fase 0: Setup (Ponto de Controle 0)
+
+    [x] Definição do Tema (Cota Parlamentar).
+
+    [x] Download dos Dados Brutos (Fonte: Kaggle/Serenata de Amor).
+
+    [x] Criação do Repositório GitHub e Estrutura de Pastas.
+
+    [x] Definição do docker-compose.yml para o PostgreSQL.
+
+🚧 Fase 1: Camada Silver (Limpeza e Normalização)
+
+    [ ] Criar script SQL (DDL) para as tabelas relacionais (3FN).
+
+    [ ] Desenvolver Notebook Jupyter para ler CSV da Bronze.
+
+    [ ] Tratar nulos, duplicatas e converter tipos de dados.
+
+    [ ] Carga dos dados limpos no PostgreSQL (Silver).
+
+⏳ Fase 2: Camada Gold (Data Warehouse)
+
+    [ ] Modelagem do Star Schema (Definição de Fatos e Dimensões).
+
+    [ ] Criar script SQL para tabelas Gold.
+
+    [ ] Desenvolver ETL (Silver -> Gold) para popular as dimensões e a fato.
+
+    [ ] Implementar chaves substitutas (Surrogate Keys) se necessário.
+
+⏳ Fase 3: Analytics e Entrega Final
+
+    [ ] Conectar Power BI ao PostgreSQL.
+
+    [ ] Criar Dashboard Executivo (KPIs de gastos, filtros por partido/estado).
+
+    [ ] Documentação final e apresentação.

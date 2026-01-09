@@ -1,0 +1,13 @@
+data layer/raw/*.csv
+data layer/raw/*.zip
+data layer/silver/*.csv
+data layer/gold/*.csv
+
+# --- AMBIENTE E PYTHON ---
+__pycache__/
+*.ipynb_checkpoints/
+.DS_Store
+.env
+.venv
+docker/postgres_data/
+*.log
