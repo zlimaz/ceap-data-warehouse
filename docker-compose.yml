@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: sbd2_postgres_container
+    environment:
+      POSTGRES_USER: sbd2_user
+      POSTGRES_PASSWORD: sbd2_password
+      POSTGRES_DB: sbd2_database
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # opcional: scripts SQL de inicialização automática (RAW/SILVER/GOLD)
+      # - ./data_layer/silver/ddl.sql:/docker-entrypoint-initdb.d/10_silver_ddl.sql:ro
+      # - ./data_layer/gold/ddl.sql:/docker-entrypoint-initdb.d/20_gold_ddl.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sbd2_user -d sbd2_database"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: sbd2_pgadmin_container
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@sbd2.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  pgadmin_data:
