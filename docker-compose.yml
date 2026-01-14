@@ -1,42 +1,54 @@
 version: "3.8"
 
 services:
-  db:
+  #  Serviço 1: Banco de Dados 
+  postgres:
     image: postgres:15-alpine
-    container_name: sbd2_postgres_container
-    environment:
-      POSTGRES_USER: sbd2_user
-      POSTGRES_PASSWORD: sbd2_password
-      POSTGRES_DB: sbd2_database
+    container_name: ceap_postgres  
+    restart: unless-stopped
     ports:
       - "5432:5432"
+    environment:
+      # Credenciais diretas 
+      POSTGRES_DB: ceap_dw
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin_password
+      TZ: America/Sao_Paulo 
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      # opcional: scripts SQL de inicialização automática (RAW/SILVER/GOLD)
-      # - ./data_layer/silver/ddl.sql:/docker-entrypoint-initdb.d/10_silver_ddl.sql:ro
-      # - ./data_layer/gold/ddl.sql:/docker-entrypoint-initdb.d/20_gold_ddl.sql:ro
-    restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U sbd2_user -d sbd2_database"]
-      interval: 5s
+      test: ["CMD-SHELL", "pg_isready -U admin -d ceap_dw"]
+      interval: 10s
       timeout: 5s
-      retries: 10
+      retries: 5
 
+  #  Serviço 2: Jupyter Notebook 
+  jupyter:
+    image: jupyter/scipy-notebook:python-3.10
+    container_name: ceap_jupyter
+    ports:
+      - "8888:8888"
+    environment:
+      JUPYTER_TOKEN: "sbd2"  # Senha para acessar o site
+      TZ: America/Sao_Paulo
+    volumes:
+      # Mapeia a pasta raiz do PC para dentro do Jupyter
+      - ../:/home/jovyan/work
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  #  Serviço 3: pgAdmin 
   pgadmin:
     image: dpage/pgadmin4:latest
-    container_name: sbd2_pgadmin_container
+    container_name: ceap_pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@sbd2.com
+      PGADMIN_DEFAULT_EMAIL: admin@ceap.com
       PGADMIN_DEFAULT_PASSWORD: admin
     ports:
       - "5050:80"
     depends_on:
-      db:
-        condition: service_healthy
-    volumes:
-      - pgadmin_data:/var/lib/pgadmin
-    restart: unless-stopped
+      - postgres
 
 volumes:
   postgres_data:
-  pgadmin_data:

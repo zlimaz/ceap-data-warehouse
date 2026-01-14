@@ -59,3 +59,15 @@ graph LR
     [ ] Criar Dashboard Executivo (KPIs de gastos, filtros por partido/estado).
 
     [ ] Documentação final e apresentação.
+    
+    
+    ANOTAÇÕES AULA:
+    
+    12/01
+    - ETL do exemplo do julio, o etl é a parte que ele é mais chato, dado do csv para jogar para o banco, csv limpa e joga direto pro banco. CSV -> BANCO(ONE BIG TABLE DA DATA SILVER QUE ELE FALOU), vai tratar no arquivo de ETL mesmo vendo o erro no analitys. nao gerar csv no final do codigo
+    - na silver uma unica tabela -> comentário para cada coluna
+    - fazer DLD, MER E DER.
+    - carregou o banco o e depois monta o MER, DER E DLD
+    - SÓ UMA TABELA NA SILVER, DLD, MER E DER, SOMENTE UMA TABELA.
+    - no BRMODELO
+   - criar dimensao partido, dimensao politico, criar dimensoes porque os pontos importantes sao os recibos e as datas que eles sao emitidos, criar uma coluna que seja a data de criação do partido politicp
