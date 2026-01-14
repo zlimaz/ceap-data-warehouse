@@ -1,19 +1,15 @@
-version: "3.8"
-
 services:
-  #  Serviço 1: Banco de Dados 
   postgres:
     image: postgres:15-alpine
-    container_name: ceap_postgres  
+    container_name: ceap_postgres
     restart: unless-stopped
     ports:
       - "5432:5432"
     environment:
-      # Credenciais diretas 
       POSTGRES_DB: ceap_dw
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin_password
-      TZ: America/Sao_Paulo 
+      TZ: America/Sao_Paulo
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -22,33 +18,21 @@ services:
       timeout: 5s
       retries: 5
 
-  #  Serviço 2: Jupyter Notebook 
-  jupyter:
-    image: jupyter/scipy-notebook:python-3.10
-    container_name: ceap_jupyter
-    ports:
-      - "8888:8888"
-    environment:
-      JUPYTER_TOKEN: "sbd2"  # Senha para acessar o site
-      TZ: America/Sao_Paulo
-    volumes:
-      # Mapeia a pasta raiz do PC para dentro do Jupyter
-      - ../:/home/jovyan/work
-    depends_on:
-      postgres:
-        condition: service_healthy
-
-  #  Serviço 3: pgAdmin 
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: ceap_pgadmin
+    restart: unless-stopped
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@ceap.com
       PGADMIN_DEFAULT_PASSWORD: admin
     ports:
       - "5050:80"
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
 
 volumes:
   postgres_data:
+  pgadmin_data:
