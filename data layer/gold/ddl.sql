@@ -1,17 +1,13 @@
--- ============================================================================
--- SCRIPT DDL - CRIAÇÃO DO DATA WAREHOUSE (SCHEMA DW) - PROJETO CEAP
+-- Script DDL.sql
 -- Estrutura: Star Schema (1 Fato, 6 Dimensões)
 -- Padrão de Mnemônicos: 3 letras (dw, fat, dim, srk, cod, nom...)
--- ============================================================================
 
--- 1. Criação do Schema
+-- Criação do Schema
 CREATE SCHEMA IF NOT EXISTS dw;
 
--- ============================================================================
--- 2. CRIAÇÃO DAS TABELAS DIMENSÃO
--- ============================================================================
+-- CRIAÇÃO DAS TABELAS DIMENSÃO
 
--- 2.1 DIMENSÃO TEMPO (Calendário)
+-- DIMENSÃO TEMPO (Calendário)
 DROP TABLE IF EXISTS dw.dim_tmp CASCADE;
 CREATE TABLE dw.dim_tmp (
     srk_tmp BIGSERIAL PRIMARY KEY,    -- Chave Surrogada Sequencial
@@ -24,15 +20,15 @@ CREATE TABLE dw.dim_tmp (
     num_sem INT                       -- Semestre
 );
 
--- 2.2 DIMENSÃO LOCALIZAÇÃO (Estado e Região)
+-- DIMENSÃO LOCALIZAÇÃO (Estado e Região)
 DROP TABLE IF EXISTS dw.dim_loc CASCADE;
 CREATE TABLE dw.dim_loc (
     srk_loc BIGSERIAL PRIMARY KEY,
     sgl_est CHAR(2),                  -- Sigla do Estado (SP, DF...)
-    nom_reg VARCHAR(50)               -- Região (Norte, Sudeste...) - COLUNA NOVA!
+    nom_reg VARCHAR(50)               -- Região (Norte, Sudeste...) - Coluna Nova
 );
 
--- 2.3 DIMENSÃO PARTIDO (Agremiação Política)
+-- DIMENSÃO PARTIDO (Agremiação Política)
 DROP TABLE IF EXISTS dw.dim_prt CASCADE;
 CREATE TABLE dw.dim_prt (
     srk_prt BIGSERIAL PRIMARY KEY,
@@ -41,14 +37,14 @@ CREATE TABLE dw.dim_prt (
     dat_cri DATE                      -- Data de Criação (Enriquecimento)
 );
 
--- 2.4 DIMENSÃO CATEGORIA (Tipo de Despesa Unificada)
+-- DIMENSÃO CATEGORIA (Tipo de Despesa Unificada)
 DROP TABLE IF EXISTS dw.dim_cat CASCADE;
 CREATE TABLE dw.dim_cat (
     srk_cat BIGSERIAL PRIMARY KEY,
     nom_cat VARCHAR(255)              -- Nome já limpo (Taxi, Combustível)
 );
 
--- 2.5 DIMENSÃO FORNECEDOR (Quem recebeu)
+-- DIMENSÃO FORNECEDOR (Quem recebeu)
 DROP TABLE IF EXISTS dw.dim_frn CASCADE;
 CREATE TABLE dw.dim_frn (
     srk_frn BIGSERIAL PRIMARY KEY,
@@ -56,7 +52,7 @@ CREATE TABLE dw.dim_frn (
     nom_frn VARCHAR(255)              -- Nome do Estabelecimento
 );
 
--- 2.6 DIMENSÃO DEPUTADO (Dados Pessoais)
+-- DIMENSÃO DEPUTADO (Dados Pessoais)
 DROP TABLE IF EXISTS dw.dim_dpt CASCADE;
 CREATE TABLE dw.dim_dpt (
     srk_dpt BIGSERIAL PRIMARY KEY,
@@ -65,11 +61,10 @@ CREATE TABLE dw.dim_dpt (
     num_leg VARCHAR(50)               -- Carteira Funcional / Legislatura
 );
 
--- ============================================================================
--- 3. CRIAÇÃO DA TABELA FATO
--- ============================================================================
+-- CRIAÇÃO DA TABELA FATO
+-- 
 
--- 3.1 FATO REEMBOLSO (Métricas)
+-- FATO REEMBOLSO (Métricas)
 DROP TABLE IF EXISTS dw.fat_rmb CASCADE;
 CREATE TABLE dw.fat_rmb (
     srk_rmb BIGSERIAL PRIMARY KEY,
@@ -87,9 +82,8 @@ CREATE TABLE dw.fat_rmb (
     cod_doc VARCHAR(100)              -- Número da Nota Fiscal (Degenerate Dim)
 );
 
--- ============================================================================
--- 4. ÍNDICES (Para performance no Power BI)
--- ============================================================================
+-- ÍNDICES (Para performance no Power BI)
+
 CREATE INDEX idx_fat_dpt ON dw.fat_rmb(srk_dpt);
 CREATE INDEX idx_fat_tmp ON dw.fat_rmb(srk_tmp);
 CREATE INDEX idx_fat_cat ON dw.fat_rmb(srk_cat);
