@@ -1,7 +1,7 @@
--- SCRIPT DE CONSULTAS OLAP - PERGUNTAS DE NEGÓCIO
+-- Scrips de Consultas OLAP - Consultas de Negócio
 -- Objetivo: Extrair insights estratégicos do Data Warehouse (Schema dw)
 
--- TOP 10 DEPUTADOS MAIS GASTADORES (GERAL)
+-- Top 10 deputados que mais gastam (GERAL)
 -- Objetivo: Identificar os outliers absolutos de gasto na cota parlamentar.
 SELECT 
     d.nom_par AS deputado,
@@ -16,7 +16,7 @@ GROUP BY d.nom_par, p.sgl_prt, l.sgl_est
 ORDER BY total_gasto DESC
 LIMIT 10;
 
--- RANKING DE GASTOS TOTAIS POR PARTIDO
+-- Ranking de gastos totais por Partido
 -- Objetivo: Identificar quais bancadas consomem mais recursos públicos (Volume Total).
 SELECT 
     p.sgl_prt AS partido,
@@ -28,7 +28,7 @@ JOIN dw.dim_dpt d ON f.srk_dpt = d.srk_dpt
 GROUP BY p.sgl_prt
 ORDER BY total_gasto DESC;
 
--- GASTO MÉDIO POR DEPUTADO EM CADA PARTIDO (PER CAPITA)
+-- Gasto médio por deputado em cada partido (PER CAPITA)
 -- Objetivo: Métrica de justiça. Qual partido é "mais caro" por cabeça, independente do tamanho da bancada.
 SELECT 
     p.sgl_prt AS partido,
@@ -38,7 +38,7 @@ JOIN dw.dim_prt p ON f.srk_prt = p.srk_prt
 GROUP BY p.sgl_prt
 ORDER BY gasto_medio_por_deputado DESC;
 
--- RANKING DE GASTOS POR ESTADO (UF)
+-- Ranking de gastos por Estado (UF)
 -- Objetivo: Comparar o custo parlamentar por unidade federativa.
 SELECT 
     l.sgl_est AS estado,
@@ -49,7 +49,7 @@ JOIN dw.dim_loc l ON f.srk_loc = l.srk_loc
 GROUP BY l.sgl_est, l.nom_reg
 ORDER BY total_gasto DESC;
 
--- AS 5 CATEGORIAS DE DESPESA MAIS CARAS
+-- As 5 categorias de despesa mais caras
 -- Objetivo: Entender para onde vai o dinheiro (Combustível? Passagens? Divulgação?).
 SELECT 
     c.nom_cat AS categoria,
@@ -61,7 +61,7 @@ GROUP BY c.nom_cat
 ORDER BY total_gasto DESC
 LIMIT 5;
 
--- (CTE) TOP FORNECEDORES: QUEM MAIS RECEBEU VERBA?
+-- (CTE) Top Fornecedores: Quem mais recebeu mais verba?
 -- Objetivo: Identificar empresas que concentram os recebimentos (Ex: Cias Aéreas).
 WITH RankingFornecedores AS (
     SELECT 
@@ -76,7 +76,7 @@ SELECT * FROM RankingFornecedores
 ORDER BY total_recebido DESC
 LIMIT 10;
 
--- (CTE) DEPUTADOS QUE GASTAM ACIMA DA MÉDIA NACIONAL
+-- (CTE) Deputados que gastam acima da média
 -- Objetivo: Identificar parlamentares que fogem do padrão de gasto "normal".
 WITH MediaGasto AS (
     SELECT AVG(total_deputado) AS media_geral
@@ -104,7 +104,7 @@ WHERE gd.total_gasto > mg.media_geral
 ORDER BY valor_acima_da_media DESC
 LIMIT 20;
 
--- ANÁLISE MACRO: GASTOS POR REGIÃO GEOGRÁFICA
+-- Análise Macro: Gastos por regiões geograficas 
 -- Objetivo: Validar o enriquecimento de dados (Coluna Região criada no ETL).
 SELECT 
     l.nom_reg AS regiao,
@@ -115,7 +115,7 @@ JOIN dw.dim_loc l ON f.srk_loc = l.srk_loc
 GROUP BY l.nom_reg
 ORDER BY total_gasto DESC;
 
--- EVOLUÇÃO TEMPORAL: GASTO POR ANO
+-- Evolução Temporal: Gasto por ano
 -- Objetivo: Analisar a tendência de crescimento ou redução de custos ao longo do tempo.
 SELECT 
     t.num_ano AS ano,
@@ -125,7 +125,7 @@ JOIN dw.dim_tmp t ON f.srk_tmp = t.srk_tmp
 GROUP BY t.num_ano
 ORDER BY t.num_ano;
 
--- DETALHAMENTO: GASTOS EM FINAIS DE SEMANA
+-- Detalhamento: Gastos em finais de Semana
 -- Objetivo: Auditoria simples. Identificar volume de gastos feitos em dias não úteis (Sáb/Dom).
 -- Requer que o dia da semana tenha sido extraído ou calculado via função.
 SELECT 
