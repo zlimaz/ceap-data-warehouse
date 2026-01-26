@@ -8,14 +8,14 @@
 
 ## Participantes do Projeto
 
-* **Lucas Víctor Ferreira de Araújo** 211063194
-* **Miguel Artur**
+* **Lucas Víctor** - 211063194
+* **Miguel Arthur** - 211062320
 ---
 ## Visão Geral do Projeto
 
-Este projeto tem como objetivo o **desenvolvimento de um Data Warehouse** para análise dos **reembolsos parlamentares da CEAP (Cota para o Exercício da Atividade Parlamentar)**, aplicando conceitos fundamentais de **ETL**, **modelagem dimensional**, **Star Schema** e **boas práticas de nomenclatura (mnemônicos)**.
+Este projeto tem como objetivo o desenvolvimento de um Data Warehouse para análise dos **reembolsos parlamentares da CEAP (Cota para o Exercício da Atividade Parlamentar)**, aplicando conceitos fundamentais de **ETL**, **modelagem dimensional**, **Star Schema** e boas práticas de nomenclatura (mnemônicos).
 
-O Data Warehouse foi estruturado em **três camadas principais (Raw, Silver e Gold)**, permitindo a evolução progressiva dos dados desde sua forma bruta até uma estrutura analítica otimizada para consultas e visualizações.
+O Data Warehouse foi estruturado em três camadas principais (Raw, Silver e Gold), permitindo a evolução progressiva dos dados desde sua forma bruta até uma estrutura analítica otimizada para consultas e visualizações.
 
 ---
 
@@ -31,11 +31,11 @@ RAW  →  SILVER  →  GOLD
 
 * Armazena os **dados brutos**, conforme obtidos das fontes originais.
 * Nenhuma regra de negócio é aplicada.
-* Objetivo: **preservar a integridade dos dados originais**.
+* Objetivo: preservar a integridade dos dados originais.
 
 ### Camada Silver
 
-* Responsável pela **limpeza, padronização e enriquecimento** dos dados.
+* Responsável pela limpeza, padronização e enriquecimento dos dados.
 * Tratamento de:
 
   * Tipos de dados
@@ -46,7 +46,7 @@ RAW  →  SILVER  →  GOLD
 
 ### Camada Gold
 
-* Camada **analítica final**, estruturada em **Star Schema**.
+* Camada analítica final, estruturada em Star Schema.
 * Contém:
 
   * **1 Tabela Fato**
@@ -57,11 +57,11 @@ RAW  →  SILVER  →  GOLD
 
 ## Modelagem Dimensional – Camada Gold
 
-A camada Gold foi modelada segundo o padrão **Star Schema**, no qual:
+A camada Gold foi modelada segundo o padrão Star Schema, no qual:
 
 * A tabela fato **FAT_RMB** fica no centro do modelo.
-* Todas as dimensões se conectam **diretamente** à tabela fato.
-* **Não existem relacionamentos entre dimensões**.
+* Todas as dimensões se conectam diretamente à tabela fato.
+* Não existem relacionamentos entre dimensões.
 
 ### Tabela Fato
 
@@ -79,14 +79,14 @@ A camada Gold foi modelada segundo o padrão **Star Schema**, no qual:
 * **DIM_FRN** – Fornecedor
 * **DIM_TMP** – Tempo
 
-O **DER da camada Gold** foi construído de forma que **visualmente represente uma estrela**, conforme esperado em modelos dimensionais.
+O DER da camada Gold foi construído de forma que visualmente represente uma estrela, conforme esperado em modelos dimensionais.
 
 ---
 
 ## Granularidade
 
 > **Grão da tabela fato:**
-> Cada registro da tabela **FAT_RMB** representa **um reembolso individual**, associado exatamente a:
+> Cada registro da tabela FAT_RMB representa um reembolso individual, associado exatamente a:
 
 * um deputado,
 * um partido,
@@ -99,7 +99,7 @@ O **DER da camada Gold** foi construído de forma que **visualmente represente u
 
 ## Padronização de Nomenclatura (Mnemônicos)
 
-O projeto adota um **padrão rigoroso de mnemônicos com 3 letras**, aplicado de forma consistente em todas as camadas, especialmente na Gold.
+O projeto adota um padrão rigoroso de mnemônicos com 3 letras, aplicado de forma consistente em todas as camadas, especialmente na Gold.
 
 Exemplos:
 
@@ -210,7 +210,7 @@ docker-compose.yml
 
 ## Considerações Finais
 
-Este projeto consolida, de forma prática, os principais conceitos de **Data Warehousing**, **ETL**, **modelagem dimensional** e **boas práticas de projeto de dados**, estando totalmente alinhado aos critérios acadêmicos da disciplina de **Banco de Dados II**.
+Este projeto consolida, de forma prática, os principais conceitos de **Data Warehousing**, **ETL**, **modelagem dimensional** e **boas práticas de projeto de dados**, estando totalmente alinhado aos critérios acadêmicos da disciplina de Sistema Banco de Dados II.
 
 A camada Gold foi cuidadosamente modelada para **evidenciar enriquecimento de dados**, **uso correto de Star Schema** e **consistência semântica**, atendendo às exigências de avaliação do professor.
 
