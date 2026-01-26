@@ -49,16 +49,16 @@ DROP TABLE IF EXISTS dw.dim_frn CASCADE;
 CREATE TABLE dw.dim_frn (
     srk_frn BIGSERIAL PRIMARY KEY,
     cod_doc VARCHAR(50),              -- CNPJ ou CPF (Business Key)
-    nom_frn VARCHAR(255)              -- Nome do Estabelecimento
+    nom_frn VARCHAR(255)             
 );
 
 -- Dimensão Deputado (Dados Pessoais)
 DROP TABLE IF EXISTS dw.dim_dpt CASCADE;
 CREATE TABLE dw.dim_dpt (
     srk_dpt BIGSERIAL PRIMARY KEY,
-    cod_ide INT,                      -- ID Original do CEAP
-    nom_par VARCHAR(255),             -- Nome do Parlamentar
-    num_leg VARCHAR(50)               -- Carteira Funcional / Legislatura
+    cod_ide INT,                      
+    nom_par VARCHAR(255),             
+    num_leg VARCHAR(50)             
 );
 
 -- Criação Tabela Fato
@@ -78,8 +78,8 @@ CREATE TABLE dw.fat_rmb (
     srk_frn INT REFERENCES dw.dim_frn(srk_frn),
     
     -- Métricas e Degenerate Dimensions
-    vlr_liq NUMERIC(12, 2),           -- Valor do Reembolso
-    cod_doc VARCHAR(100)              -- Número da Nota Fiscal (Degenerate Dim)
+    vlr_liq NUMERIC(12, 2),          
+    cod_doc VARCHAR(100)              
 );
 
 -- índices (Para o Power BI)
