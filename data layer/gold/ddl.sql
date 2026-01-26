@@ -32,7 +32,7 @@ CREATE TABLE dw.dim_loc (
 DROP TABLE IF EXISTS dw.dim_prt CASCADE;
 CREATE TABLE dw.dim_prt (
     srk_prt BIGSERIAL PRIMARY KEY,
-    sgl_prt VARCHAR(20),             
+    sgl_prt VARCHAR(50),             
     nom_prt VARCHAR(255),             
     dat_cri DATE                     
 );
