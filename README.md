@@ -62,16 +62,29 @@ O grande diferencial analítico deste Data Warehouse é a implementação de um 
 
 Esta seção concentra os resultados entregues ao usuário final (Business). Os painéis no Power BI demonstram não apenas o agregado financeiro da cota parlamentar, mas destacam os relatórios de exceção baseados nas regras do Pentágono da Fiscalização.
 
-*(Substitua os links dos placeholders abaixo pelas imagens definitivas dos dashboards ao finalizar o projeto)*
-
 <div align="center">
-  <img src="https://via.placeholder.com/850x450/1e1e2e/00d2ff?text=Dashboard+Vis%C3%A3o+Geral" alt="Dashboard Visão Geral" />
-  <p><i>Figura 1: Visão macro de despesas por Estado e Partido Político.</i></p>
+  <img src="assets/Imagen1.jpeg" alt="Dashboard Power BI - Visão 1" width="850" />
+  <p><i>Figura 1: Dashboard Analítico - Visão Geral.</i></p>
   
   <br>
 
-  <img src="https://via.placeholder.com/850x450/1e1e2e/ff4b4b?text=Dashboard+Pent%C3%A1gono+da+Fiscaliza%C3%A7%C3%A3o" alt="Dashboard Auditoria e Anomalias" />
-  <p><i>Figura 2: Identificação de anomalias, flags comportamentais e excessos do teto.</i></p>
+  <img src="assets/imagen2.jpeg" alt="Dashboard Power BI - Visão 2" width="850" />
+  <p><i>Figura 2: Análise de Métricas e KPIs.</i></p>
+  
+  <br>
+
+  <img src="assets/imagen3.jpeg" alt="Dashboard Power BI - Visão 3" width="850" />
+  <p><i>Figura 3: Auditoria e Regras de Negócio.</i></p>
+
+  <br>
+
+  <img src="assets/WhatsApp%20Image%202026-06-11%20at%2021.30.19.jpeg" alt="Dashboard Power BI - Visão 4" width="850" />
+  <p><i>Figura 4: Detalhamento de Despesas.</i></p>
+
+  <br>
+
+  <img src="assets/WhatsApp%20Image%202026-06-11%20at%2021.30.19(1).jpeg" alt="Dashboard Power BI - Visão 5" width="850" />
+  <p><i>Figura 5: Resultados da Fiscalização.</i></p>
 </div>
 
 ---
